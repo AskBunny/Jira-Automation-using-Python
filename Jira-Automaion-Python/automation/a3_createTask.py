@@ -6,6 +6,7 @@ Created on Jan. 21, 2022
 
 import requests
 from requests.auth import HTTPBasicAuth
+from automation import key
 import json
 
 
@@ -15,7 +16,7 @@ import json
 class Task():
     
     url = "https://freetestingapi.atlassian.net/rest/api/2/issue"
-    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", "4x7NQ3XzzcKZog9t6HsXAFBC")
+    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", key.Key().key)
     headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"

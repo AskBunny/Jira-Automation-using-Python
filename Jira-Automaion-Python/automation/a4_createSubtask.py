@@ -2,32 +2,33 @@
 Created on Jan. 21, 2022
 
 @author: amitmittal
+@description: Subtask class creates subtask in Jira using python
+It accepts the variable from the test file
 '''
 
 import requests
 from requests.auth import HTTPBasicAuth
+from automation import key
 import json
 
-
-#1. Get the project key from the dashboard and go to the link: https://freetestingapi.atlassian.net/rest/api/latest/issue/createmeta?projecyKeys="Enter here"
-#2. Get the key for the Subtask
  
 class Subtask():
     
     url = "https://freetestingapi.atlassian.net/rest/api/2/issue"
-    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", "4x7NQ3XzzcKZog9t6HsXAFBC")
+    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", key.Key().key)
     headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
     }
 
-    def __init__(self, summary, desc, issueType, parent_key, project_key):
+    def __init__(self, summary, desc, issueType, parent_key, project_key, word):
         
         self.summary = summary
         self.desc = desc
         self.issueType = issueType
         self.parent_key = parent_key
         self.project_key = project_key
+        self.word = word
     
     def createSubtask(self):
         payload = json.dumps( {
@@ -43,7 +44,11 @@ class Subtask():
                     },
                 "project":{
                     "key": self.project_key
-                    }           
+                    },
+                "assignee": {
+                    "id": key.Key().assign
+                    },          
+                "labels":self.word 
                 }
             }
         )
@@ -56,6 +61,5 @@ class Subtask():
            auth=self.auth,
            )
         
-        #print(response.text)
         print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
             

@@ -2,10 +2,13 @@
 Created on Jan. 20, 2022
 
 @author: amitmittal
+@description: Project class creates project in Jira using python
+It accepts the variable from the test file
 '''
 
 import requests
 from requests.auth import HTTPBasicAuth
+from automation import key
 import json
 
 #To check the projects and key
@@ -18,14 +21,14 @@ import json
 # Basic: "com.pyxis.greenhopper.jira:basic-software-development-template"
  #business: com.atlassian.jira-core-project-templates:jira-core-simplified-project-management
  
+ 
 class Project():
     
     url = "https://freetestingapi.atlassian.net/rest/api/3/project"
-    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", "4x7NQ3XzzcKZog9t6HsXAFBC")
+    auth = HTTPBasicAuth("hi.amitmittal@gmail.com", key.Key().key)
     headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
-    #user 'admin@domain.com:A1b2345CdEfgHIJkLMn67O8Q'
     }
 
     def __init__(self, define_key, project_name, desc):
@@ -55,6 +58,5 @@ class Project():
            auth=self.auth,
         )
         
-        #print(response.text)
         print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
             
